@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -26,7 +27,7 @@ export function CosmicPlayer() {
       >
         <video
           ref={videoRef}
-          src="https://firebasestudio-hosting-f2553.web.app/4k-video-sample.mp4"
+          src={videoSrc || ""}
           autoPlay
           className="w-full h-full object-contain transition-all duration-300"
           style={{
@@ -41,7 +42,7 @@ export function CosmicPlayer() {
         <div
           className={cn(
             "absolute inset-0 flex items-center justify-center transition-opacity duration-300 z-10",
-            (videoSrc || videoRef.current?.src) ? "opacity-0 pointer-events-none" : "opacity-100"
+            (videoSrc) ? "opacity-0 pointer-events-none" : "opacity-100"
           )}
         >
           <div className="text-center text-white">
