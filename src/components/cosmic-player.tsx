@@ -27,8 +27,6 @@ export function CosmicPlayer() {
       >
         <video
           ref={videoRef}
-          src={videoSrc || ""}
-          autoPlay
           className="w-full h-full object-contain transition-all duration-300"
           style={{
             transform: `scale(${controls.zoom})`,
@@ -79,7 +77,7 @@ export function CosmicPlayer() {
           ref={playerState.folderInputRef}
           className="hidden"
           accept="video/*"
-          onChange={playerState.clickHandlers.handleFileChange}
+  
           multiple
           {...({ webkitdirectory: "true", directory: "true" } as any)}
         />

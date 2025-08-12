@@ -6,7 +6,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 const DEFAULT_VIDEO_SRC = "https://firebasestudio-hosting-f2553.web.app/4k-video-sample.mp4";
 
 export function useCosmicPlayer() {
-  const [videoSrc, setVideoSrc] = useState<string | null>(DEFAULT_VIDEO_SRC);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -145,11 +145,15 @@ export function useCosmicPlayer() {
       setPlaybackRate(videoRef.current.playbackRate);
     }
   };
+
+  useEffect(() => {
+    setVideoSrc(DEFAULT_VIDEO_SRC);
+  }, []);
   
   useEffect(() => {
     if (videoSrc && videoRef.current) {
         videoRef.current.src = videoSrc;
-        videoRef.current?.play();
+        videoRef.current?.play().catch(e => console.error("Autoplay was prevented:", e));
         setIsPlaying(true);
     }
   }, [videoSrc]);
