@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from 'react';
@@ -6,7 +5,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 const DEFAULT_VIDEO_SRC = "https://firebasestudio-hosting-f2553.web.app/4k-video-sample.mp4";
 
 export function useCosmicPlayer() {
-  const [videoSrc, setVideoSrc] = useState<string | null>(DEFAULT_VIDEO_SRC);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -25,6 +24,10 @@ export function useCosmicPlayer() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const folderInputRef = useRef<HTMLInputElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setVideoSrc(DEFAULT_VIDEO_SRC);
+  }, []);
 
   const resetControlsTimeout = useCallback(() => {
     if (controlsTimeoutRef.current) {
@@ -157,13 +160,7 @@ export function useCosmicPlayer() {
       setPlaybackRate(videoRef.current.playbackRate);
     }
   };
-
-  useEffect(() => {
-    if (videoSrc && videoRef.current) {
-        videoRef.current.src = videoSrc;
-    }
-  }, [videoSrc]);
-
+  
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -189,7 +186,7 @@ export function useCosmicPlayer() {
         setIsPlaying(true);
         resetControlsTimeout();
     }
-  }, [resetControlsTimeout]);
+  }, [resetControlsTimeout, videoSrc]);
 
 
   return {

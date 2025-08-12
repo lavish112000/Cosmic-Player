@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -27,6 +26,7 @@ export function CosmicPlayer() {
       >
         <video
           ref={videoRef}
+          src={videoSrc || ''}
           className="w-full h-full object-contain transition-all duration-300"
           style={{
             transform: `scale(${controls.zoom})`,
