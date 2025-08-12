@@ -27,7 +27,6 @@ export function CosmicPlayer() {
       >
         <video
           ref={videoRef}
-          src={videoSrc || ''}
           className="w-full h-full object-contain transition-all duration-300"
           style={{
             transform: `scale(${controls.zoom})`,
@@ -36,6 +35,8 @@ export function CosmicPlayer() {
           onTimeUpdate={clickHandlers.handleTimeUpdate}
           onLoadedMetadata={clickHandlers.handleLoadedMetadata}
           onEnded={() => functions.setIsPlaying(false)}
+          autoPlay
+          muted
         />
 
         <div

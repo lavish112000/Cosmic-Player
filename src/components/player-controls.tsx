@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useContext } from 'react';
@@ -61,7 +62,7 @@ export function PlayerControls() {
             </div>
             <div className="flex items-center gap-2 group w-40">
               <Button variant="ghost" size="icon" className="text-white" onClick={functions.toggleMute}>
-                {controls.volume === 0 || controls.isMuted ? <VolumeX /> : controls.volume < 0.5 ? <Volume1 /> : <Volume2 />}
+                {controls.isMuted ? <VolumeX /> : controls.volume < 0.5 ? <Volume1 /> : <Volume2 />}
               </Button>
               <Slider
                 min={0}

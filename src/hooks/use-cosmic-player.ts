@@ -11,7 +11,7 @@ export function useCosmicPlayer() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [areControlsVisible, setAreControlsVisible] = useState(true);
@@ -61,17 +61,20 @@ export function useCosmicPlayer() {
     if (videoRef.current) {
       videoRef.current.volume = newVolume;
       setVolume(newVolume);
-      if (newVolume > 0 && isMuted) {
-        setIsMuted(false);
-        videoRef.current.muted = false;
-      }
+      videoRef.current.muted = newVolume === 0;
+      setIsMuted(newVolume === 0);
     }
   };
 
   const toggleMute = () => {
     if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+      const newMuted = !isMuted;
+      videoRef.current.muted = newMuted;
+      setIsMuted(newMuted);
+      if(!newMuted && volume === 0) {
+        setVolume(1);
+        videoRef.current.volume = 1;
+      }
     }
   };
   
@@ -117,6 +120,10 @@ export function useCosmicPlayer() {
     if (file) {
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+        setIsMuted(false);
+      }
     }
   };
   
@@ -141,7 +148,12 @@ export function useCosmicPlayer() {
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
-      setIsPlaying(!videoRef.current.paused);
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(e => {
+        setIsPlaying(false);
+        console.error("Autoplay was prevented:", e)
+      });
       setPlaybackRate(videoRef.current.playbackRate);
     }
   };
@@ -149,8 +161,6 @@ export function useCosmicPlayer() {
   useEffect(() => {
     if (videoSrc && videoRef.current) {
         videoRef.current.src = videoSrc;
-        videoRef.current?.play().catch(e => console.error("Autoplay was prevented:", e));
-        setIsPlaying(true);
     }
   }, [videoSrc]);
 
@@ -175,7 +185,7 @@ export function useCosmicPlayer() {
   }, [isPlaying, resetControlsTimeout]);
   
   useEffect(() => {
-    if (videoRef.current && videoRef.current.src) {
+    if (videoRef.current?.src) {
         setIsPlaying(true);
         resetControlsTimeout();
     }
