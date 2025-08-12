@@ -14,16 +14,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 export function AppHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const navLinks = [
-    { href: '#', label: 'Home' },
-    { href: '#', label: 'Browse' },
-    { href: '#', label: 'Library' },
-    { href: '#', label: 'Pricing' },
+    { href: '/', label: 'Home' },
+    { href: '/browse', label: 'Browse' },
+    { href: '/library', label: 'Library' },
+    { href: '/pricing', label: 'Pricing' },
   ];
 
   return (
