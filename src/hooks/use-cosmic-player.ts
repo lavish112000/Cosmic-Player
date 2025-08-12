@@ -114,6 +114,9 @@ export function useCosmicPlayer() {
     if (file) {
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
+      if (videoRef.current) {
+        videoRef.current.src = url;
+      }
     }
   };
   
@@ -144,9 +147,10 @@ export function useCosmicPlayer() {
   };
   
   useEffect(() => {
-    if (videoSrc) {
-        setIsPlaying(true);
+    if (videoSrc && videoRef.current) {
+        videoRef.current.src = videoSrc;
         videoRef.current?.play();
+        setIsPlaying(true);
     }
   }, [videoSrc]);
 
@@ -169,6 +173,13 @@ export function useCosmicPlayer() {
        if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
     }
   }, [isPlaying, resetControlsTimeout]);
+  
+  useEffect(() => {
+    if (videoRef.current && videoRef.current.src) {
+        setIsPlaying(true);
+        resetControlsTimeout();
+    }
+  }, [resetControlsTimeout]);
 
 
   return {
