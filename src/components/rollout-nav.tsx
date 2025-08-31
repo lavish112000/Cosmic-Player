@@ -22,12 +22,11 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';
 import { LCIcon } from '@/components/icons';
 import { cn } from '@/lib/utils';
-import { Home, Compass, Library, HelpCircle, X, Maximize, Minimize, ZoomIn, ZoomOut, MonitorUp, Languages, AudioWaveform, RectangleHorizontal, RectangleVertical, Crop, ChevronsRight, ChevronsLeft, File, Folder, Clock, RefreshCw, Info, Send, ListMusic } from 'lucide-react';
+import { Home, Compass, Library, HelpCircle, X, Maximize, Minimize, ZoomIn, ZoomOut, MonitorUp, Languages, AudioWaveform, RectangleHorizontal, Crop, ChevronsRight, ChevronsLeft, File, Folder, Clock, RefreshCw, Info, Send, ListMusic } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export function RolloutNav() {
@@ -94,7 +93,7 @@ export function RolloutNav() {
                 {renderNavButton(MonitorUp, "Audio Device")}
                 {renderNavButton(controls.isFullscreen ? Minimize : Maximize, "Fullscreen", functions.toggleFullScreen)}
                 <div className="flex items-center gap-1">{renderNavButton(ZoomOut, "Zoom Out", () => functions.changeZoom(-0.1))} {renderNavButton(ZoomIn, "Zoom In", () => functions.changeZoom(0.1))}</div>
-                <Select onValueChange={(v) => functions.setAspectRatio(v as any)} defaultValue={controls.aspectRatio}>
+                <Select onValueChange={(v) => functions.setAspectRatio(v as 'contain' | 'cover' | 'fill')} defaultValue={controls.aspectRatio}>
                     <SelectTrigger className="w-full justify-start gap-2 bouncy-click bg-transparent border-0 hover:bg-accent/50"><RectangleHorizontal className="w-4 h-4"/>Aspect Ratio</SelectTrigger>
                     <SelectContent><SelectItem value="contain">Auto</SelectItem><SelectItem value="fill">Fill</SelectItem><SelectItem value="cover">Cover</SelectItem></SelectContent>
                 </Select>

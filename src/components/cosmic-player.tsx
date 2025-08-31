@@ -34,6 +34,7 @@ export function CosmicPlayer() {
           }}
           onTimeUpdate={clickHandlers.handleTimeUpdate}
           onLoadedMetadata={clickHandlers.handleLoadedMetadata}
+          onError={clickHandlers.handleVideoError}
           onEnded={() => functions.setIsPlaying(false)}
           autoPlay
           muted
@@ -81,7 +82,7 @@ export function CosmicPlayer() {
           accept="video/*"
   
           multiple
-          {...({ webkitdirectory: "true", directory: "true" } as any)}
+          {...({ webkitdirectory: "true", directory: "true" } as React.InputHTMLAttributes<HTMLInputElement>)}
         />
       </div>
     </PlayerProvider>

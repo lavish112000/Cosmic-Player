@@ -16,8 +16,8 @@ export function useCosmicPlayer() {
   const [areControlsVisible, setAreControlsVisible] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [aspectRatio, setAspectRatio] = useState<'contain' | 'cover' | 'fill'>('contain');
-  const [subtitleTrack, setSubtitleTrack] = useState<string | null>(null);
-  const [audioTrack, setAudioTrack] = useState(0);
+  const [subtitleTrack] = useState<string | null>(null);
+  const [audioTrack] = useState(0);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
@@ -112,6 +112,12 @@ export function useCosmicPlayer() {
         videoRef.current.pause();
         videoRef.current.src = "";
     }
+    
+    // Clean up object URL to prevent memory leaks
+    if (videoSrc && videoSrc.startsWith('blob:')) {
+      URL.revokeObjectURL(videoSrc);
+    }
+    
     setVideoSrc(null);
     setIsPlaying(false);
     setProgress(0);
@@ -121,6 +127,17 @@ export function useCosmicPlayer() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file type for security
+      if (!file.type.startsWith('video/')) {
+        console.error('Invalid file type. Please select a video file.');
+        return;
+      }
+      
+      // Clean up previous object URL to prevent memory leaks
+      if (videoSrc && videoSrc.startsWith('blob:')) {
+        URL.revokeObjectURL(videoSrc);
+      }
+      
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
       if (videoRef.current) {
@@ -146,6 +163,11 @@ export function useCosmicPlayer() {
     if (videoRef.current) {
       setProgress(videoRef.current.currentTime);
     }
+  };
+
+  const handleVideoError = () => {
+    console.error("Error loading video");
+    setIsPlaying(false);
   };
 
   const handleLoadedMetadata = () => {
@@ -235,6 +257,7 @@ export function useCosmicPlayer() {
       handleMouseMove,
       handleTimeUpdate,
       handleLoadedMetadata,
+      handleVideoError,
     }
   };
 }
