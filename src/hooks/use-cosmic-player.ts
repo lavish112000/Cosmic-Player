@@ -15,9 +15,11 @@ export function useCosmicPlayer() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [areControlsVisible, setAreControlsVisible] = useState(true);
   const [zoom, setZoom] = useState(1);
-  const [aspectRatio, setAspectRatio] = useState<'contain' | 'cover' | 'fill'>('contain');
+  const [aspectRatio, setAspectRatioState] = useState<'contain' | 'cover' | 'fill'>('contain');
   const [subtitleTrack, setSubtitleTrack] = useState<string | null>(null);
   const [audioTrack, setAudioTrack] = useState(0);
+  const availableSubtitleTracks = ['Off', 'English', 'Spanish', 'French', 'German'];
+  const availableAudioTracks = ['Track 1 (Default)', 'Track 2', 'Track 3'];
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
@@ -89,9 +91,21 @@ export function useCosmicPlayer() {
     }
   };
   
+  const setAspectRatio = (ratio: 'contain' | 'cover' | 'fill') => {
+    setAspectRatioState(ratio);
+  };
+
   const changeZoom = (delta: number) => {
     setZoom(prev => Math.max(1, Math.min(3, prev + delta)));
-  }
+  };
+
+  const selectSubtitleTrack = (track: string | null) => {
+    setSubtitleTrack(track);
+  };
+
+  const selectAudioTrack = (trackIndex: number) => {
+    setAudioTrack(trackIndex);
+  };
 
   const toggleFullScreen = useCallback(() => {
     if (!playerContainerRef.current) return;
@@ -110,6 +124,10 @@ export function useCosmicPlayer() {
   const exitPlayer = () => {
     if (videoRef.current) {
         videoRef.current.pause();
+        // Revoke object URL to prevent memory leaks
+        if (videoSrc && videoSrc.startsWith('blob:')) {
+            URL.revokeObjectURL(videoSrc);
+        }
         videoRef.current.src = "";
     }
     setVideoSrc(null);
@@ -121,11 +139,19 @@ export function useCosmicPlayer() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Revoke previous object URL to prevent memory leaks
+      if (videoSrc && videoSrc.startsWith('blob:')) {
+        URL.revokeObjectURL(videoSrc);
+      }
+
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
+
       if (videoRef.current) {
+        // Reset muted state for new files to allow autoplay
         videoRef.current.muted = false;
         setIsMuted(false);
+        setVolume(1); // Reset volume to 100%
       }
     }
   };
@@ -151,13 +177,21 @@ export function useCosmicPlayer() {
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(e => {
-        setIsPlaying(false);
-        console.error("Autoplay was prevented:", e)
-      });
       setPlaybackRate(videoRef.current.playbackRate);
+
+      // Try to autoplay, but handle cases where it's blocked
+      const attemptAutoplay = async () => {
+        try {
+          await videoRef.current!.play();
+          setIsPlaying(true);
+        } catch (e) {
+          // Autoplay was prevented, keep muted state and don't auto-play
+          setIsPlaying(false);
+          console.warn("Autoplay was prevented by browser:", e);
+        }
+      };
+
+      attemptAutoplay();
     }
   };
   
@@ -204,6 +238,8 @@ export function useCosmicPlayer() {
       aspectRatio,
       subtitleTrack,
       audioTrack,
+      availableSubtitleTracks,
+      availableAudioTracks,
     },
     functions: {
       setIsPlaying,
@@ -215,6 +251,8 @@ export function useCosmicPlayer() {
       toggleFullScreen,
       setAspectRatio,
       changeZoom,
+      selectSubtitleTrack,
+      selectAudioTrack,
       openFilePicker,
       openFolderPicker,
       exitPlayer,
