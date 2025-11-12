@@ -183,7 +183,9 @@ export function useCosmicPlayer() {
    * Toggle fullscreen mode on/off
    */
   const toggleFullScreen = useCallback(() => {
-    if (!playerContainerRef.current) return;
+    if (!playerContainerRef.current) {
+      return;
+    }
     if (!document.fullscreenElement) {
       // Enter fullscreen
       playerContainerRef.current.requestFullscreen();
@@ -336,12 +338,16 @@ export function useCosmicPlayer() {
       resetControlsTimeout();
     } else {
       // Keep controls visible when paused
-      if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
+      }
       setAreControlsVisible(true);
     }
     // Cleanup timeout on unmount
     return () => {
-      if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
+      }
     };
   }, [isPlaying, resetControlsTimeout]);
 
