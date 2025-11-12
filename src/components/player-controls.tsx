@@ -1,9 +1,18 @@
+/**
+ * Player Controls Component
+ * The bottom control bar for the video player
+ * Includes: play/pause, seek bar, volume control, playback speed, and collapse toggle
+ */
+
 'use client';
 
 import React, { useContext, useState } from 'react';
+// Access player state from context
 import { PlayerContext } from '@/contexts/player-context';
+// UI Components
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+// Icons for control buttons
 import {
   Play,
   Pause,
@@ -15,51 +24,72 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
+// Utilities
 import { cn } from '@/lib/utils';
 import { formatTime } from '@/lib/utils';
 
-export function PlayerControls() {
+/**
+ * Main Player Controls Component
+ */
+export function PlayerControls({ isHidden = false }: { isHidden?: boolean }) {
+  // Get player state from context
   const context = useContext(PlayerContext);
+  // Track whether controls are collapsed (minimal mode)
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  // Don't render if context is not available
   if (!context) {
     return null;
   }
 
+  // Extract needed values from context
   const { controls, functions, videoSrc } = context;
 
+  /**
+   * Handle seeking when user drags the progress bar
+   * @param value - Array with new time position in seconds
+   */
   const handleSeek = (value: number[]) => {
     functions.seekTo(value[0]);
   };
 
+  /**
+   * Handle volume change when user adjusts volume slider
+   * @param value - Array with new volume level (0-1)
+   */
   const handleVolumeChange = (value: number[]) => {
     functions.setVolume(value[0]);
   };
 
+  // Don't show controls if no video is loaded
   if (!videoSrc) {
     return null;
   }
 
   return (
+    // Control bar container (bottom of screen) with rounded corners
     <div
       className={cn(
-        'absolute bottom-0 left-0 right-0 z-20 p-6 transition-all duration-500',
-        'bg-gradient-to-t from-black/80 via-black/40 to-transparent',
-        'border-t border-white/10 backdrop-blur-xl',
-        controls.areControlsVisible
+        'absolute bottom-4 left-1/2 z-20 -translate-x-1/2 transition-all duration-500',
+        'w-[95%] max-w-6xl rounded-2xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-xl',
+        // Show/hide based on both areControlsVisible and isHidden states
+        controls.areControlsVisible && !isHidden
           ? 'translate-y-0 opacity-100'
-          : 'pointer-events-none translate-y-full opacity-0'
+          : 'pointer-events-none translate-y-8 opacity-0'
       )}
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()} // Prevent clicks from reaching video container
     >
       <div className="mx-auto w-full max-w-6xl">
-        {/* Progress Bar */}
+        {/* ===== PROGRESS BAR ===== */}
         <div className="group relative mb-6">
+          {/* Visual progress bar background */}
           <div className="h-2 overflow-hidden rounded-full bg-white/20 backdrop-blur-sm">
             <div className="relative h-full overflow-hidden rounded-full bg-gradient-to-r from-cosmic-purple via-cosmic-pink to-cosmic-blue transition-all duration-300">
+              {/* Animated shimmer effect */}
               <div className="absolute inset-0 animate-[shimmer_2s_linear_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             </div>
           </div>
+          {/* Interactive slider (invisible, positioned over progress bar) */}
           <Slider
             min={0}
             max={controls.duration}
@@ -68,15 +98,17 @@ export function PlayerControls() {
             onValueChange={handleSeek}
             className="absolute inset-0 h-2 w-full cursor-pointer opacity-0 transition-opacity group-hover:opacity-100"
           />
+          {/* Time tooltip (shows on hover) */}
           <div className="absolute -top-8 left-1/2 -translate-x-1/2 transform rounded-full bg-black/80 px-3 py-1 text-xs text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
             {formatTime(controls.progress)}
           </div>
         </div>
 
-        {/* Main Controls */}
+        {/* ===== MAIN CONTROLS ROW ===== */}
         <div className="flex items-center justify-between">
+          {/* Left side controls */}
           <div className="flex items-center gap-6">
-            {/* Play/Pause Button */}
+            {/* ===== PLAY/PAUSE BUTTON ===== */}
             <Button
               variant="ghost"
               size="icon"
@@ -90,8 +122,9 @@ export function PlayerControls() {
               )}
             </Button>
 
-            {/* Playback Speed Controls */}
+            {/* ===== PLAYBACK SPEED CONTROLS ===== */}
             <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md">
+              {/* Decrease speed button */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -103,6 +136,7 @@ export function PlayerControls() {
               <span className="w-12 text-center text-sm font-medium tabular-nums text-cosmic-cyan">
                 {controls.playbackRate.toFixed(2)}x
               </span>
+              {/* Increase speed button */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -113,8 +147,9 @@ export function PlayerControls() {
               </Button>
             </div>
 
-            {/* Volume Controls */}
+            {/* ===== VOLUME CONTROLS ===== */}
             <div className="group flex items-center gap-3">
+              {/* Mute/Unmute button */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -129,6 +164,7 @@ export function PlayerControls() {
                   <Volume2 className="h-5 w-5" />
                 )}
               </Button>
+              {/* Volume slider (hidden by default, shows on hover) */}
               <div className="h-2 w-24 overflow-hidden rounded-full bg-white/20 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
                 <Slider
                   min={0}

@@ -1,29 +1,50 @@
+/**
+ * Tailwind CSS Configuration File
+ * Customizes the Tailwind CSS framework for the Cosmic Player theme
+ * Includes: custom colors, fonts, animations, and design tokens
+ *
+ * Learn more: https://tailwindcss.com/docs/configuration
+ */
+
 import type { Config } from 'tailwindcss';
 
 export default {
+  // Enable dark mode using the 'class' strategy (add 'dark' class to html element)
   darkMode: ['class'],
+
+  // Specify which files Tailwind should scan for class names
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+
   theme: {
+    // Container configuration for responsive layouts
     container: {
-      center: true,
-      padding: '2rem',
+      center: true, // Center containers by default
+      padding: '2rem', // Add padding inside containers
       screens: {
-        '2xl': '1400px',
+        '2xl': '1400px', // Max width for 2xl breakpoint
       },
     },
+
     extend: {
+      /* ===== CUSTOM FONTS ===== */
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['"Space Grotesk"', 'sans-serif'],
-        code: ['monospace'],
+        body: ['Inter', 'sans-serif'], // Body text font
+        headline: ['"Space Grotesk"', 'sans-serif'], // Headings font
+        code: ['monospace'], // Code/monospace font
       },
+
+      /* ===== CUSTOM COLORS ===== */
+      // Uses CSS variables defined in globals.css for easy theme switching
       colors: {
+        // Base colors
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+
+        // Component colors
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
@@ -74,11 +95,8 @@ export default {
           glow: 'hsl(var(--ambient-glow))',
         },
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
+
+      /* ===== CUSTOM ANIMATIONS ===== */
       keyframes: {
         'accordion-down': {
           from: {

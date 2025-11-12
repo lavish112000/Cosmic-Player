@@ -16,6 +16,22 @@ A high-performance 4K video player built with Next.js 15, React 18, and TypeScri
 - 🧪 Comprehensive testing with Jest
 - 📱 Mobile-friendly design
 - 🌙 Dark mode support
+- 📚 **Fully documented codebase** - Every file includes beginner-friendly comments!
+
+## 📚 Documentation for Beginners
+
+**New to coding?** This project is perfect for learning! Every file includes detailed comments explaining:
+
+- What the code does
+- Why it's needed
+- How it works
+- How to use it
+
+### Start Here:
+
+1. **[Code Guide for Beginners](docs/CODE_GUIDE.md)** - Complete overview of the project structure
+2. **[Documentation Update Summary](docs/DOCUMENTATION_UPDATE.md)** - List of all documented files
+3. Open any `.tsx` or `.ts` file - they're all heavily commented!
 
 ## 🚀 Getting Started
 

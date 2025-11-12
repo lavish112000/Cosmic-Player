@@ -2,12 +2,16 @@
   "name": "nextn",
   "version": "0.1.0",
   "private": true,
+  "main": "electron/main.js",
   "scripts": {
     "dev": "next dev --turbopack -p 9002",
-    "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
-    "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
+    "dev:electron": "concurrently \"npm:dev\" \"wait-on http://localhost:9002 && cross-env NODE_ENV=development electron .\"",
     "build": "next build",
+    "build:prod": "next build",
     "start": "next start",
+    "start:electron": "cross-env NODE_ENV=production electron .",
+    "pack": "electron-builder --dir",
+    "dist": "npm run build:prod && electron-builder -w",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
@@ -20,6 +24,23 @@
     "prepare": "husky",
     "pre-commit": "lint-staged",
     "security:audit": "npm audit --production"
+  },
+  "build": {
+    "appId": "com.cosmic.player",
+    "productName": "Cosmic Player",
+    "files": [
+      "electron/**",
+      "out/**",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.14.1",
@@ -63,7 +84,8 @@
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "electron-is-dev": "^3.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
@@ -73,6 +95,8 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
     "eslint": "9.35.0",
     "eslint-config-next": "15.5.3",
     "genkit-cli": "^1.14.1",
@@ -84,7 +108,10 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "wait-on": "^7.2.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

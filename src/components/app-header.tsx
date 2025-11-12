@@ -1,8 +1,15 @@
+/**
+ * App Header Component
+ * The top navigation bar of the application
+ * Features: Logo, navigation links, mobile menu, and user profile dropdown
+ */
+
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { LCIcon } from '@/components/icons';
+import Link from 'next/link'; // Next.js optimized navigation
+import { LCIcon } from '@/components/icons'; // Custom logo icon
+// UI Components
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -14,11 +21,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Menu } from 'lucide-react';
+import { Menu } from 'lucide-react'; // Hamburger menu icon
 
+/**
+ * Main App Header Component
+ */
 export function AppHeader() {
+  // State to control mobile menu open/close
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Navigation menu links
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/browse', label: 'Browse' },
@@ -27,18 +39,25 @@ export function AppHeader() {
   ];
 
   return (
+    // Sticky header that stays at top when scrolling
     <header className="sticky top-0 z-50 w-full border-b border-white/20 bg-black/80 backdrop-blur-2xl supports-[backdrop-filter]:bg-black/60">
       <div className="container flex h-16 max-w-screen-2xl items-center">
+        {/* ===== DESKTOP NAVIGATION (hidden on mobile) ===== */}
         <div className="mr-4 hidden md:flex">
+          {/* Logo and brand name */}
           <Link href="/" className="group mr-8 flex items-center space-x-3">
             <div className="relative">
+              {/* Animated logo icon */}
               <LCIcon className="h-8 w-8 text-cosmic-purple drop-shadow-[0_0_10px_hsl(var(--cosmic-purple))] transition-colors duration-300 group-hover:text-cosmic-pink" />
+              {/* Glow effect behind logo */}
               <div className="absolute inset-0 h-8 w-8 animate-pulse-glow rounded-full bg-cosmic-purple/20 blur-md" />
             </div>
             <span className="text-gradient font-headline text-xl font-bold transition-transform duration-300 group-hover:scale-105">
               Cosmic Player
             </span>
           </Link>
+
+          {/* Navigation links */}
           <nav className="flex items-center gap-8 text-sm">
             {navLinks.map((link) => (
               <Link
@@ -47,15 +66,19 @@ export function AppHeader() {
                 className="hover-lift hover-glow group relative rounded-lg px-3 py-2 text-white/70 transition-all duration-300 hover:text-cosmic-cyan"
               >
                 <span className="relative z-10">{link.label}</span>
+                {/* Hover background gradient effect */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cosmic-purple/0 via-cosmic-purple/10 to-cosmic-purple/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </Link>
             ))}
           </nav>
         </div>
 
+        {/* ===== MOBILE MENU (visible only on mobile) ===== */}
         <div className="md:hidden">
+          {/* Sheet component creates a slide-in drawer */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
+              {/* Hamburger menu button */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -65,10 +88,12 @@ export function AppHeader() {
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
+            {/* Mobile menu drawer content */}
             <SheetContent
               side="left"
               className="border-r border-white/20 bg-black/90 text-white backdrop-blur-2xl"
             >
+              {/* Mobile logo */}
               <Link
                 href="/"
                 className="group mb-6 flex items-center space-x-3 px-4"

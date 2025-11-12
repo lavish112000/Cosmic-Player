@@ -89,6 +89,7 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
         'absolute right-0 top-0 z-20 h-full w-96 bg-black/80 backdrop-blur-2xl transition-all duration-500 ease-out',
         'border-l border-white/20 shadow-2xl',
         'bg-gradient-to-b from-black/90 via-black/70 to-black/90',
+        'overflow-hidden', // Prevent overflow
         isOpen
           ? 'translate-x-0 opacity-100'
           : 'pointer-events-none translate-x-full opacity-0'

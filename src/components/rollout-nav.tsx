@@ -53,7 +53,15 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-export function RolloutNav() {
+export function RolloutNav({
+  areSideButtonsVisible = true,
+  setAreSideButtonsVisible,
+  sideButtonsTimeoutRef,
+}: {
+  areSideButtonsVisible?: boolean;
+  setAreSideButtonsVisible?: (visible: boolean) => void;
+  sideButtonsTimeoutRef?: React.MutableRefObject<NodeJS.Timeout | null>;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAboutOpen, setAboutOpen] = useState(false);
   const [isSubtitleDialogOpen, setIsSubtitleDialogOpen] = useState(false);
@@ -105,9 +113,20 @@ export function RolloutNav() {
       <div
         className={cn(
           'absolute left-4 top-4 z-30 transition-all duration-500',
-          isOpen && 'translate-x-[320px]'
+          isOpen && 'translate-x-[320px]',
+          areSideButtonsVisible
+            ? 'translate-x-0 opacity-100'
+            : '-translate-x-20 opacity-0'
         )}
-        onMouseEnter={() => setIsOpen(true)}
+        onMouseEnter={() => {
+          setIsOpen(true);
+          if (setAreSideButtonsVisible) {
+            setAreSideButtonsVisible(true);
+            if (sideButtonsTimeoutRef?.current) {
+              clearTimeout(sideButtonsTimeoutRef.current);
+            }
+          }
+        }}
         onMouseLeave={() => setIsOpen(false)}
       >
         <Button
@@ -126,7 +145,15 @@ export function RolloutNav() {
           'bg-gradient-to-b from-black/80 via-black/60 to-black/80',
           isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
         )}
-        onMouseEnter={() => setIsOpen(true)}
+        onMouseEnter={() => {
+          setIsOpen(true);
+          if (setAreSideButtonsVisible) {
+            setAreSideButtonsVisible(true);
+            if (sideButtonsTimeoutRef?.current) {
+              clearTimeout(sideButtonsTimeoutRef.current);
+            }
+          }
+        }}
         onMouseLeave={() => setIsOpen(false)}
       >
         <div className="flex h-full flex-col p-6">
@@ -149,7 +176,8 @@ export function RolloutNav() {
           {/* Navigation Menu */}
           <Accordion
             type="multiple"
-            className="mt-6 w-full flex-grow space-y-2 overflow-y-auto text-white"
+            className="scrollbar-hide mt-6 w-full flex-grow space-y-2 overflow-y-auto text-white"
+            style={{ maxHeight: 'calc(100vh - 250px)' }}
           >
             <AccordionItem value="home" className="border-b border-white/10">
               <AccordionTrigger className="group rounded-lg px-3 py-2 transition-colors hover:bg-white/5 hover:no-underline">
