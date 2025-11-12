@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useContext } from 'react';
 import { PlayerContext } from '@/contexts/player-context';
@@ -12,7 +12,7 @@ import {
   RotateCcw,
   Settings,
   X,
-  BarChart3
+  BarChart3,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -53,7 +53,9 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
   const [currentPreset, setCurrentPreset] = useState<string>('flat');
   const [isEnabled, setIsEnabled] = useState(false);
 
-  if (!context) return null;
+  if (!context) {
+    return null;
+  }
 
   const handleBandChange = (index: number, value: number[]) => {
     const newBands = [...eqBands];
@@ -65,14 +67,14 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
     const preset = presets[presetName as keyof typeof presets];
     const newBands = eqBands.map((band, index) => ({
       ...band,
-      value: preset[index]
+      value: preset[index],
     }));
     setEqBands(newBands);
     setCurrentPreset(presetName);
   };
 
   const resetEQ = () => {
-    const resetBands = eqBands.map(band => ({ ...band, value: 0 }));
+    const resetBands = eqBands.map((band) => ({ ...band, value: 0 }));
     setEqBands(resetBands);
     setCurrentPreset('flat');
   };
@@ -84,32 +86,36 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
   return (
     <div
       className={cn(
-        "absolute top-0 right-0 h-full w-96 bg-black/80 backdrop-blur-2xl z-20 transition-all duration-500 ease-out",
-        "border-l border-white/20 shadow-2xl",
-        "bg-gradient-to-b from-black/90 via-black/70 to-black/90",
-        isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
+        'absolute right-0 top-0 z-20 h-full w-96 bg-black/80 backdrop-blur-2xl transition-all duration-500 ease-out',
+        'border-l border-white/20 shadow-2xl',
+        'bg-gradient-to-b from-black/90 via-black/70 to-black/90',
+        isOpen
+          ? 'translate-x-0 opacity-100'
+          : 'pointer-events-none translate-x-full opacity-0'
       )}
     >
-      <div className="p-6 h-full flex flex-col">
+      <div className="flex h-full flex-col p-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <AudioWaveform className="w-8 h-8 text-cosmic-cyan" />
-              <div className="absolute inset-0 w-8 h-8 bg-cosmic-cyan/20 rounded-full blur-md animate-pulse-glow" />
+              <AudioWaveform className="h-8 w-8 text-cosmic-cyan" />
+              <div className="absolute inset-0 h-8 w-8 animate-pulse-glow rounded-full bg-cosmic-cyan/20 blur-md" />
             </div>
             <div>
-              <h3 className="text-xl font-headline font-bold text-gradient">Equalizer</h3>
+              <h3 className="text-gradient font-headline text-xl font-bold">
+                Equalizer
+              </h3>
               <p className="text-xs text-white/60">7-Band Audio Processor</p>
             </div>
           </div>
           <Button
             variant="ghost"
             size="icon"
-            className="w-8 h-8 text-white/70 hover:text-white hover:bg-white/10 bouncy-click"
+            className="bouncy-click h-8 w-8 text-white/70 hover:bg-white/10 hover:text-white"
             onClick={onClose}
           >
-            <X className="w-4 h-4" />
+            <X className="h-4 w-4" />
           </Button>
         </div>
 
@@ -122,20 +128,22 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
               variant="ghost"
               size="icon"
               className={cn(
-                "w-10 h-10 rounded-full bouncy-click transition-all duration-300",
+                'bouncy-click h-10 w-10 rounded-full transition-all duration-300',
                 isEnabled
-                  ? "bg-cosmic-cyan/20 text-cosmic-cyan border border-cosmic-cyan/30 glow-cyan"
-                  : "bg-white/10 text-white/70 hover:text-cosmic-cyan hover:bg-cosmic-cyan/10"
+                  ? 'glow-cyan border border-cosmic-cyan/30 bg-cosmic-cyan/20 text-cosmic-cyan'
+                  : 'bg-white/10 text-white/70 hover:bg-cosmic-cyan/10 hover:text-cosmic-cyan'
               )}
               onClick={toggleEQ}
             >
-              <Volume2 className="w-5 h-5" />
+              <Volume2 className="h-5 w-5" />
             </Button>
             <Badge
               variant="secondary"
               className={cn(
-                "transition-colors",
-                isEnabled ? "bg-cosmic-cyan/20 text-cosmic-cyan border-cosmic-cyan/30" : "bg-white/10 text-white/60"
+                'transition-colors',
+                isEnabled
+                  ? 'border-cosmic-cyan/30 bg-cosmic-cyan/20 text-cosmic-cyan'
+                  : 'bg-white/10 text-white/60'
               )}
             >
               {isEnabled ? 'Enabled' : 'Disabled'}
@@ -144,27 +152,32 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="w-8 h-8 text-white/70 hover:text-cosmic-orange hover:bg-cosmic-orange/20 bouncy-click"
+            className="bouncy-click h-8 w-8 text-white/70 hover:bg-cosmic-orange/20 hover:text-cosmic-orange"
             onClick={resetEQ}
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="h-4 w-4" />
           </Button>
         </div>
 
         {/* EQ Bands */}
         <div className="flex-grow">
-          <div className="grid grid-cols-7 gap-4 mb-6">
+          <div className="mb-6 grid grid-cols-7 gap-4">
             {eqBands.map((band, index) => (
-              <div key={band.frequency} className="flex flex-col items-center gap-3">
-                <div className="text-xs text-white/60 font-medium">{band.frequency}</div>
+              <div
+                key={band.frequency}
+                className="flex flex-col items-center gap-3"
+              >
+                <div className="text-xs font-medium text-white/60">
+                  {band.frequency}
+                </div>
                 <div className="relative h-32 w-8">
                   {/* Background scale */}
                   <div className="absolute inset-0 flex flex-col justify-between py-1">
                     {Array.from({ length: 9 }).map((_, i) => (
                       <div
                         key={i}
-                        className="w-full h-px bg-white/20"
-                        style={{ opacity: 0.3 + (i * 0.1) }}
+                        className="h-px w-full bg-white/20"
+                        style={{ opacity: 0.3 + i * 0.1 }}
                       />
                     ))}
                   </div>
@@ -184,8 +197,9 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
                   </div>
 
                   {/* Value display */}
-                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-cosmic-cyan font-mono">
-                    {band.value > 0 ? '+' : ''}{band.value}
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 transform font-mono text-xs text-cosmic-cyan">
+                    {band.value > 0 ? '+' : ''}
+                    {band.value}
                   </div>
                 </div>
               </div>
@@ -193,21 +207,24 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
           </div>
 
           {/* Frequency Response Visualization */}
-          <div className="mb-6 p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="flex items-center gap-2 mb-3">
-              <BarChart3 className="w-4 h-4 text-cosmic-cyan" />
-              <span className="text-sm text-white/80 font-medium">Frequency Response</span>
+          <div className="mb-6 rounded-lg border border-white/10 bg-white/5 p-4">
+            <div className="mb-3 flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-cosmic-cyan" />
+              <span className="text-sm font-medium text-white/80">
+                Frequency Response
+              </span>
             </div>
-            <div className="h-16 bg-black/20 rounded flex items-end justify-between px-2 py-1">
+            <div className="flex h-16 items-end justify-between rounded bg-black/20 px-2 py-1">
               {eqBands.map((band) => {
-                const height = ((band.value - band.min) / (band.max - band.min)) * 100;
+                const height =
+                  ((band.value - band.min) / (band.max - band.min)) * 100;
                 return (
                   <div
                     key={band.frequency}
-                    className="flex-1 mx-px bg-gradient-to-t from-cosmic-cyan to-cosmic-blue rounded-sm transition-all duration-300"
+                    className="mx-px flex-1 rounded-sm bg-gradient-to-t from-cosmic-cyan to-cosmic-blue transition-all duration-300"
                     style={{
                       height: `${Math.max(10, height)}%`,
-                      opacity: isEnabled ? 0.8 : 0.3
+                      opacity: isEnabled ? 0.8 : 0.3,
                     }}
                   />
                 );
@@ -218,8 +235,8 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
 
         {/* Presets */}
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-white/80 flex items-center gap-2">
-            <Settings className="w-4 h-4" />
+          <h4 className="flex items-center gap-2 text-sm font-medium text-white/80">
+            <Settings className="h-4 w-4" />
             Presets
           </h4>
           <div className="grid grid-cols-2 gap-2">
@@ -229,10 +246,10 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
                 variant="ghost"
                 size="sm"
                 className={cn(
-                  "capitalize text-xs bouncy-click transition-all duration-300",
+                  'bouncy-click text-xs capitalize transition-all duration-300',
                   currentPreset === preset
-                    ? "bg-cosmic-purple/20 text-cosmic-purple border border-cosmic-purple/30"
-                    : "bg-white/5 text-white/70 hover:text-cosmic-purple hover:bg-cosmic-purple/10"
+                    ? 'border border-cosmic-purple/30 bg-cosmic-purple/20 text-cosmic-purple'
+                    : 'bg-white/5 text-white/70 hover:bg-cosmic-purple/10 hover:text-cosmic-purple'
                 )}
                 onClick={() => applyPreset(preset)}
                 disabled={!isEnabled}
@@ -244,10 +261,13 @@ export function Equalizer({ isOpen, onClose }: EqualizerProps) {
         </div>
 
         {/* Footer */}
-        <div className="mt-4 pt-4 border-t border-white/10">
+        <div className="mt-4 border-t border-white/10 pt-4">
           <div className="flex items-center justify-between text-xs text-white/60">
             <span>Current: {currentPreset}</span>
-            <Badge variant="outline" className="border-cosmic-cyan/30 text-cosmic-cyan">
+            <Badge
+              variant="outline"
+              className="border-cosmic-cyan/30 text-cosmic-cyan"
+            >
               7-Band EQ
             </Badge>
           </div>

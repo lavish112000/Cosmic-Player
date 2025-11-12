@@ -1,0 +1,133 @@
+name: Code Review Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  automated-review:
+    name: Automated Code Review
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate code review report
+        id: review
+        run: |
+          echo "## 🔍 Automated Code Review Report" > review-report.md
+          echo "" >> review-report.md
+          echo "### Quality Checks" >> review-report.md
+          echo "" >> review-report.md
+          
+          # Type checking
+          echo "#### TypeScript Type Checking" >> review-report.md
+          if npm run typecheck; then
+            echo "✅ **PASSED** - No type errors found" >> review-report.md
+          else
+            echo "❌ **FAILED** - Type errors detected" >> review-report.md
+            npm run typecheck 2>&1 | tail -20 >> review-report.md
+          fi
+          echo "" >> review-report.md
+          
+          # Linting
+          echo "#### ESLint" >> review-report.md
+          if npm run lint; then
+            echo "✅ **PASSED** - No linting errors" >> review-report.md
+          else
+            echo "❌ **FAILED** - Linting errors detected" >> review-report.md
+            npm run lint 2>&1 | tail -20 >> review-report.md
+          fi
+          echo "" >> review-report.md
+          
+          # Formatting
+          echo "#### Code Formatting (Prettier)" >> review-report.md
+          if npm run format:check; then
+            echo "✅ **PASSED** - Code is properly formatted" >> review-report.md
+          else
+            echo "⚠️ **FAILED** - Code formatting issues detected" >> review-report.md
+            echo "Run \`npm run format\` to fix automatically" >> review-report.md
+          fi
+          echo "" >> review-report.md
+          
+          # Tests
+          echo "#### Unit Tests" >> review-report.md
+          if npm test -- --passWithNoTests; then
+            echo "✅ **PASSED** - All tests passing" >> review-report.md
+          else
+            echo "❌ **FAILED** - Some tests are failing" >> review-report.md
+          fi
+          echo "" >> review-report.md
+          
+          echo "### 📋 Code Review Checklist" >> review-report.md
+          echo "" >> review-report.md
+          echo "Please ensure the following before merging:" >> review-report.md
+          echo "" >> review-report.md
+          echo "- [ ] All automated checks pass" >> review-report.md
+          echo "- [ ] Code follows TypeScript best practices" >> review-report.md
+          echo "- [ ] Tests are written and passing" >> review-report.md
+          echo "- [ ] Documentation is updated" >> review-report.md
+          echo "- [ ] No security vulnerabilities introduced" >> review-report.md
+          echo "- [ ] Performance considerations addressed" >> review-report.md
+          echo "- [ ] Accessibility requirements met" >> review-report.md
+          echo "" >> review-report.md
+          echo "📚 See [CODE_REVIEW.md](../blob/main/CODE_REVIEW.md) for full checklist" >> review-report.md
+
+      - name: Comment PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('review-report.md', 'utf8');
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+
+  code-coverage:
+    name: Code Coverage Report
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with coverage
+        run: npm run test:coverage -- --passWithNoTests
+
+      - name: Comment coverage on PR
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        if: always()
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: ./coverage/lcov.info
+          delete-old-comments: true

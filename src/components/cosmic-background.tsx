@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 export function CosmicBackground() {
   return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Animated Star Field */}
       <div className="absolute inset-0">
         <div className="stars-small animate-[twinkle_4s_ease-in-out_infinite]" />
@@ -14,18 +14,18 @@ export function CosmicBackground() {
 
       {/* Dynamic Nebula Effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-cosmic-purple/20 via-transparent to-transparent animate-[drift_15s_ease-in-out_infinite]" />
-        <div className="absolute top-0 right-0 w-full h-full bg-gradient-radial from-cosmic-pink/15 via-transparent to-transparent animate-[drift_20s_ease-in-out_infinite_reverse]" />
-        <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-radial from-cosmic-blue/18 via-transparent to-transparent animate-[drift_18s_ease-in-out_infinite]" />
-        <div className="absolute bottom-0 right-0 w-full h-full bg-gradient-radial from-cosmic-cyan/12 via-transparent to-transparent animate-[drift_25s_ease-in-out_infinite_reverse]" />
+        <div className="bg-gradient-radial absolute left-0 top-0 h-full w-full animate-[drift_15s_ease-in-out_infinite] from-cosmic-purple/20 via-transparent to-transparent" />
+        <div className="bg-gradient-radial absolute right-0 top-0 h-full w-full animate-[drift_20s_ease-in-out_infinite_reverse] from-cosmic-pink/15 via-transparent to-transparent" />
+        <div className="bg-gradient-radial from-cosmic-blue/18 absolute bottom-0 left-0 h-full w-full animate-[drift_18s_ease-in-out_infinite] via-transparent to-transparent" />
+        <div className="bg-gradient-radial from-cosmic-cyan/12 absolute bottom-0 right-0 h-full w-full animate-[drift_25s_ease-in-out_infinite_reverse] via-transparent to-transparent" />
       </div>
 
       {/* Ambient Light Orbs */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cosmic-purple/10 rounded-full blur-3xl animate-[float_8s_ease-in-out_infinite]" />
-        <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-cosmic-pink/8 rounded-full blur-3xl animate-[float_10s_ease-in-out_infinite_reverse]" />
-        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-cosmic-blue/12 rounded-full blur-3xl animate-[float_12s_ease-in-out_infinite]" />
-        <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-cosmic-cyan/10 rounded-full blur-3xl animate-[float_9s_ease-in-out_infinite_reverse]" />
+        <div className="absolute left-1/4 top-1/4 h-96 w-96 animate-[float_8s_ease-in-out_infinite] rounded-full bg-cosmic-purple/10 blur-3xl" />
+        <div className="bg-cosmic-pink/8 absolute right-1/4 top-3/4 h-80 w-80 animate-[float_10s_ease-in-out_infinite_reverse] rounded-full blur-3xl" />
+        <div className="bg-cosmic-blue/12 absolute bottom-1/4 left-1/3 h-72 w-72 animate-[float_12s_ease-in-out_infinite] rounded-full blur-3xl" />
+        <div className="absolute right-1/3 top-1/3 h-64 w-64 animate-[float_9s_ease-in-out_infinite_reverse] rounded-full bg-cosmic-cyan/10 blur-3xl" />
       </div>
 
       {/* Particle System */}
@@ -33,7 +33,7 @@ export function CosmicBackground() {
         {Array.from({ length: 50 }).map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full opacity-60 animate-[particle-float_15s_linear_infinite]"
+            className="absolute h-1 w-1 animate-[particle-float_15s_linear_infinite] rounded-full bg-white opacity-60"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -46,29 +46,38 @@ export function CosmicBackground() {
 
       {/* Energy Waves */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 border border-cosmic-purple/20 rounded-full scale-50 animate-[energy-wave_4s_ease-in-out_infinite]" />
-        <div className="absolute inset-0 border border-cosmic-pink/15 rounded-full scale-75 animate-[energy-wave_6s_ease-in-out_infinite_reverse]" />
-        <div className="absolute inset-0 border border-cosmic-blue/18 rounded-full scale-25 animate-[energy-wave_5s_ease-in-out_infinite]" />
+        <div className="absolute inset-0 scale-50 animate-[energy-wave_4s_ease-in-out_infinite] rounded-full border border-cosmic-purple/20" />
+        <div className="absolute inset-0 scale-75 animate-[energy-wave_6s_ease-in-out_infinite_reverse] rounded-full border border-cosmic-pink/15" />
+        <div className="border-cosmic-blue/18 scale-25 absolute inset-0 animate-[energy-wave_5s_ease-in-out_infinite] rounded-full border" />
       </div>
 
       {/* Holographic Grid */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px] animate-[grid-shift_20s_linear_infinite]" />
+        <div className="absolute inset-0 animate-[grid-shift_20s_linear_infinite] bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
       </div>
 
       {/* Cosmic Dust */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cosmic-purple/5 to-transparent animate-[dust-flow_30s_linear_infinite]" />
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-cosmic-pink/3 to-transparent animate-[dust-flow_25s_linear_infinite_reverse]" />
+        <div className="absolute inset-0 animate-[dust-flow_30s_linear_infinite] bg-gradient-to-r from-transparent via-cosmic-purple/5 to-transparent" />
+        <div className="via-cosmic-pink/3 absolute inset-0 animate-[dust-flow_25s_linear_infinite_reverse] bg-gradient-to-l from-transparent to-transparent" />
       </div>
 
       <style jsx>{`
         .stars-small {
-          background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                            radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                            radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                            radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-                            radial-gradient(2px 2px at 160px 30px, #eee, transparent);
+          background-image:
+            radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+            radial-gradient(
+              2px 2px at 40px 70px,
+              rgba(255, 255, 255, 0.8),
+              transparent
+            ),
+            radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+            radial-gradient(
+              1px 1px at 130px 80px,
+              rgba(255, 255, 255, 0.6),
+              transparent
+            ),
+            radial-gradient(2px 2px at 160px 30px, #eee, transparent);
           background-repeat: repeat;
           background-size: 200px 100px;
           width: 100%;
@@ -76,9 +85,14 @@ export function CosmicBackground() {
         }
 
         .stars-medium {
-          background-image: radial-gradient(3px 3px at 50px 80px, #fff, transparent),
-                            radial-gradient(2px 2px at 100px 120px, rgba(255,255,255,0.9), transparent),
-                            radial-gradient(3px 3px at 150px 60px, #eee, transparent);
+          background-image:
+            radial-gradient(3px 3px at 50px 80px, #fff, transparent),
+            radial-gradient(
+              2px 2px at 100px 120px,
+              rgba(255, 255, 255, 0.9),
+              transparent
+            ),
+            radial-gradient(3px 3px at 150px 60px, #eee, transparent);
           background-repeat: repeat;
           background-size: 300px 150px;
           width: 100%;
@@ -86,8 +100,13 @@ export function CosmicBackground() {
         }
 
         .stars-large {
-          background-image: radial-gradient(4px 4px at 80px 100px, rgba(255,255,255,0.7), transparent),
-                            radial-gradient(3px 3px at 200px 140px, #fff, transparent);
+          background-image:
+            radial-gradient(
+              4px 4px at 80px 100px,
+              rgba(255, 255, 255, 0.7),
+              transparent
+            ),
+            radial-gradient(3px 3px at 200px 140px, #fff, transparent);
           background-repeat: repeat;
           background-size: 400px 200px;
           width: 100%;
@@ -95,12 +114,18 @@ export function CosmicBackground() {
         }
 
         @keyframes twinkle {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
+          0%,
+          100% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 1;
+          }
         }
 
         @keyframes drift {
-          0%, 100% {
+          0%,
+          100% {
             transform: translate(0, 0) scale(1);
             opacity: 0.3;
           }

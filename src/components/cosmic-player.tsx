@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
 import { useCosmicPlayer } from '@/hooks/use-cosmic-player';
@@ -10,12 +10,25 @@ import { Playlist } from '@/components/playlist';
 import { Equalizer } from '@/components/equalizer';
 import { MediaInfo } from '@/components/media-info';
 import { Button } from '@/components/ui/button';
-import { FileVideo, Folder, ListMusic, AudioWaveform, Info } from 'lucide-react';
+import {
+  FileVideo,
+  Folder,
+  ListMusic,
+  AudioWaveform,
+  Info,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function CosmicPlayer() {
   const playerState = useCosmicPlayer();
-  const { playerContainerRef, videoRef, videoSrc, controls, clickHandlers, functions } = playerState;
+  const {
+    playerContainerRef,
+    videoRef,
+    videoSrc,
+    controls,
+    clickHandlers,
+    functions,
+  } = playerState;
 
   // State for side panels
   const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
@@ -27,7 +40,7 @@ export function CosmicPlayer() {
       <CosmicBackground />
       <div
         ref={playerContainerRef}
-        className="relative w-full h-full bg-black/50 flex items-center justify-center"
+        className="relative flex h-full w-full items-center justify-center bg-black/50"
         onClick={clickHandlers.handleContainerClick}
         onDoubleClick={clickHandlers.handleContainerDoubleClick}
         onMouseMove={clickHandlers.handleMouseMove}
@@ -35,7 +48,7 @@ export function CosmicPlayer() {
         <video
           ref={videoRef}
           src={videoSrc || ''}
-          className="w-full h-full object-contain transition-all duration-300"
+          className="h-full w-full object-contain transition-all duration-300"
           style={{
             transform: `scale(${controls.zoom})`,
             objectFit: controls.aspectRatio,
@@ -49,98 +62,117 @@ export function CosmicPlayer() {
 
         <div
           className={cn(
-            "absolute inset-0 flex items-center justify-center transition-all duration-500 z-10",
-            (videoSrc) ? "opacity-0 pointer-events-none" : "opacity-100"
+            'absolute inset-0 z-10 flex items-center justify-center transition-all duration-500',
+            videoSrc ? 'pointer-events-none opacity-0' : 'opacity-100'
           )}
         >
-          <div className="text-center space-y-8 scale-in">
+          <div className="scale-in space-y-8 text-center">
             <div className="relative">
-              <h1 className="text-6xl md:text-8xl font-headline font-bold text-gradient mb-4 drop-shadow-[0_0_20px_hsl(var(--cosmic-purple))]">
+              <h1 className="text-gradient mb-4 font-headline text-6xl font-bold drop-shadow-[0_0_20px_hsl(var(--cosmic-purple))] md:text-8xl">
                 Cosmic Player
               </h1>
-              <div className="absolute inset-0 text-6xl md:text-8xl font-headline font-bold text-cosmic-purple opacity-20 blur-sm animate-pulse-glow">
+              <div className="absolute inset-0 animate-pulse-glow font-headline text-6xl font-bold text-cosmic-purple opacity-20 blur-sm md:text-8xl">
                 Cosmic Player
               </div>
             </div>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              Embark on an immersive journey through space and sound with our next-generation video player.
+            <p className="mx-auto mb-8 max-w-2xl text-xl leading-relaxed text-muted-foreground">
+              Embark on an immersive journey through space and sound with our
+              next-generation video player.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button
                 size="lg"
-                className="font-bold text-lg px-8 py-4 bg-gradient-to-r from-cosmic-purple to-cosmic-pink hover:from-cosmic-pink hover:to-cosmic-purple text-white border-0 glow-primary hover-glow hover-lift transition-all duration-300 bouncy-click group"
+                className="glow-primary hover-glow hover-lift bouncy-click group border-0 bg-gradient-to-r from-cosmic-purple to-cosmic-pink px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:from-cosmic-pink hover:to-cosmic-purple"
                 onClick={(e) => {
                   e.stopPropagation();
                   functions.openFilePicker();
                 }}
               >
-                <FileVideo className="mr-3 w-6 h-6 group-hover:animate-pulse" />
+                <FileVideo className="mr-3 h-6 w-6 group-hover:animate-pulse" />
                 Open Video File
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="font-bold text-lg px-8 py-4 border-2 border-cosmic-cyan text-cosmic-cyan hover:bg-cosmic-cyan hover:text-black glass hover-lift transition-all duration-300 bouncy-click"
+                className="glass hover-lift bouncy-click border-2 border-cosmic-cyan px-8 py-4 text-lg font-bold text-cosmic-cyan transition-all duration-300 hover:bg-cosmic-cyan hover:text-black"
                 onClick={(e) => {
                   e.stopPropagation();
                   functions.openFolderPicker();
                 }}
               >
-                <Folder className="mr-3 w-6 h-6" />
+                <Folder className="mr-3 h-6 w-6" />
                 Open Folder
               </Button>
             </div>
-            <div className="flex justify-center space-x-4 mt-8">
-              <div className="w-3 h-3 bg-cosmic-purple rounded-full animate-pulse"></div>
-              <div className="w-3 h-3 bg-cosmic-pink rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-3 h-3 bg-cosmic-blue rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-              <div className="w-3 h-3 bg-cosmic-cyan rounded-full animate-pulse" style={{ animationDelay: '0.6s' }}></div>
+            <div className="mt-8 flex justify-center space-x-4">
+              <div className="h-3 w-3 animate-pulse rounded-full bg-cosmic-purple" />
+              <div
+                className="h-3 w-3 animate-pulse rounded-full bg-cosmic-pink"
+                style={{ animationDelay: '0.2s' }}
+              />
+              <div
+                className="h-3 w-3 animate-pulse rounded-full bg-cosmic-blue"
+                style={{ animationDelay: '0.4s' }}
+              />
+              <div
+                className="h-3 w-3 animate-pulse rounded-full bg-cosmic-cyan"
+                style={{ animationDelay: '0.6s' }}
+              />
             </div>
           </div>
         </div>
 
         {/* Side Panel Toggle Buttons */}
-        <div className="absolute top-4 right-4 flex flex-col gap-2 z-30">
+        <div className="absolute right-4 top-4 z-30 flex flex-col gap-2">
           <Button
             variant="ghost"
             size="icon"
             className={cn(
-              "w-12 h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20 hover:border-cosmic-green/50 hover-glow hover-lift transition-all duration-300 bouncy-click",
-              isPlaylistOpen && "bg-cosmic-green/20 border-cosmic-green/50"
+              'hover-glow hover-lift bouncy-click h-12 w-12 rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-xl transition-all duration-300 hover:border-cosmic-green/50 hover:bg-white/20',
+              isPlaylistOpen && 'border-cosmic-green/50 bg-cosmic-green/20'
             )}
             onClick={() => setIsPlaylistOpen(!isPlaylistOpen)}
           >
-            <ListMusic className="w-6 h-6" />
+            <ListMusic className="h-6 w-6" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
             className={cn(
-              "w-12 h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20 hover:border-cosmic-cyan/50 hover-glow hover-lift transition-all duration-300 bouncy-click",
-              isEqualizerOpen && "bg-cosmic-cyan/20 border-cosmic-cyan/50"
+              'hover-glow hover-lift bouncy-click h-12 w-12 rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-xl transition-all duration-300 hover:border-cosmic-cyan/50 hover:bg-white/20',
+              isEqualizerOpen && 'border-cosmic-cyan/50 bg-cosmic-cyan/20'
             )}
             onClick={() => setIsEqualizerOpen(!isEqualizerOpen)}
           >
-            <AudioWaveform className="w-6 h-6" />
+            <AudioWaveform className="h-6 w-6" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
             className={cn(
-              "w-12 h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20 hover:border-cosmic-purple/50 hover-glow hover-lift transition-all duration-300 bouncy-click",
-              isMediaInfoOpen && "bg-cosmic-purple/20 border-cosmic-purple/50"
+              'hover-glow hover-lift bouncy-click h-12 w-12 rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-xl transition-all duration-300 hover:border-cosmic-purple/50 hover:bg-white/20',
+              isMediaInfoOpen && 'border-cosmic-purple/50 bg-cosmic-purple/20'
             )}
             onClick={() => setIsMediaInfoOpen(!isMediaInfoOpen)}
           >
-            <Info className="w-6 h-6" />
+            <Info className="h-6 w-6" />
           </Button>
         </div>
 
         <RolloutNav />
         <PlayerControls />
-        <Playlist isOpen={isPlaylistOpen} onClose={() => setIsPlaylistOpen(false)} />
-        <Equalizer isOpen={isEqualizerOpen} onClose={() => setIsEqualizerOpen(false)} />
-        <MediaInfo isOpen={isMediaInfoOpen} onClose={() => setIsMediaInfoOpen(false)} />
+        <Playlist
+          isOpen={isPlaylistOpen}
+          onClose={() => setIsPlaylistOpen(false)}
+        />
+        <Equalizer
+          isOpen={isEqualizerOpen}
+          onClose={() => setIsEqualizerOpen(false)}
+        />
+        <MediaInfo
+          isOpen={isMediaInfoOpen}
+          onClose={() => setIsMediaInfoOpen(false)}
+        />
 
         <input
           type="file"
@@ -155,7 +187,10 @@ export function CosmicPlayer() {
           className="hidden"
           accept="video/*"
           multiple
-          {...({ webkitdirectory: "true", directory: "true" } as React.InputHTMLAttributes<HTMLInputElement>)}
+          {...({
+            webkitdirectory: 'true',
+            directory: 'true',
+          } as React.InputHTMLAttributes<HTMLInputElement>)}
         />
       </div>
     </PlayerProvider>

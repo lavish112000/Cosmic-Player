@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { useCosmicPlayer } from '@/hooks/use-cosmic-player';

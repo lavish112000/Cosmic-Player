@@ -1,4 +1,4 @@
-import type {Config} from 'tailwindcss';
+import type { Config } from 'tailwindcss';
 
 export default {
   darkMode: ['class'],
@@ -10,9 +10,9 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: '2rem',
       screens: {
-        "2xl": "1400px",
+        '2xl': '1400px',
       },
     },
     extend: {
@@ -100,16 +100,18 @@ export default {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
-        'float': {
+        float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
         },
         'pulse-glow': {
           '0%': {
-            boxShadow: '0 0 20px hsl(var(--cosmic-purple) / 0.3), 0 0 40px hsl(var(--cosmic-purple) / 0.2)',
+            boxShadow:
+              '0 0 20px hsl(var(--cosmic-purple) / 0.3), 0 0 40px hsl(var(--cosmic-purple) / 0.2)',
           },
           '100%': {
-            boxShadow: '0 0 30px hsl(var(--cosmic-purple) / 0.6), 0 0 60px hsl(var(--cosmic-purple) / 0.4), 0 0 90px hsl(var(--cosmic-purple) / 0.2)',
+            boxShadow:
+              '0 0 30px hsl(var(--cosmic-purple) / 0.6), 0 0 60px hsl(var(--cosmic-purple) / 0.4), 0 0 90px hsl(var(--cosmic-purple) / 0.2)',
           },
         },
         'rotate-slow': {
@@ -132,7 +134,7 @@ export default {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
         },
-        'shimmer': {
+        shimmer: {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
         },
@@ -141,14 +143,14 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'ambient-rotate': 'ambient-rotate 8s linear infinite',
-        'float': 'float 6s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
         'rotate-slow': 'rotate-slow 20s linear infinite',
         'scale-in': 'scale-in 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
         'slide-up': 'slide-up 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
         'fade-in': 'fade-in 0.8s ease-out',
         'gradient-shift': 'gradient-shift 4s ease infinite',
-        'shimmer': 'shimmer 2s linear infinite',
+        shimmer: 'shimmer 2s linear infinite',
       },
     },
   },
