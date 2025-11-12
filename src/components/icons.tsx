@@ -1,18 +1,33 @@
+/**
+ * Custom Icons Component
+ * Contains custom SVG icons used throughout the application
+ */
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 
+/**
+ * LC Icon - Cosmic Player Logo
+ * A circular icon with abstract geometric design
+ *
+ * @param className - Optional CSS classes for styling
+ * @returns SVG element with the logo
+ */
 export const LCIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 100 100"
-    className={cn('h-6 w-6', className)}
-    fill="currentColor"
+    className={cn('h-6 w-6', className)} // Default size 6x6, can be overridden
+    fill="currentColor" // Uses current text color
   >
+    {/* Outer circle border */}
     <path d="M50,5A45,45,0,1,0,95,50,45.05,45.05,0,0,0,50,5Zm0,82A37,37,0,1,1,87,50,37,37,0,0,1,50,87Z" />
+    {/* Upper geometric design element */}
     <path
       d="M62.2,33.58a1,1,0,0,0-1.4.15L38.67,61.16a1,1,0,0,0,.7,1.66H61.32a1,1,0,0,0,.7-1.66L50.4,46.57a1,1,0,0,1,1.4-.15L63.33,59.43a1,1,0,0,0,1.4-.15L74.8,43.43a1,1,0,0,0-.7-1.66H63.43a1,1,0,0,0-.7,1.66l1.62,2.8-5.38-9.32a1,1,0,0,0-1.4-.15Z"
       transform="translate(-10 -5)"
     />
+    {/* Lower geometric design element */}
     <path
       d="M43.7,66.42a1,1,0,0,0,1.4-.15L67.22,38.84a1,1,0,0,0-.7-1.66H44.38a1,1,0,0,0-.7,1.66l11.62,14.59a1,1,0,0,1-1.4.15L42.28,40.57a1,1,0,0,0-1.4.15L30.8,56.57a1,1,0,0,0,.7,1.66H42.07a1,1,0,0,0,.7-1.66L41.15,53.8l5.38,9.32a1,1,0,0,0,1.4.15Z"
       transform="translate(-10 -5)"
