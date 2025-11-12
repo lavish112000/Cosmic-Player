@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useContext } from 'react';
 import { PlayerContext } from '@/contexts/player-context';
@@ -16,7 +16,7 @@ import {
   Play,
   Pause,
   SkipBack,
-  SkipForward
+  SkipForward,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatTime } from '@/lib/utils';
@@ -29,19 +29,25 @@ interface MediaInfoProps {
 export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
   const context = useContext(PlayerContext);
 
-  if (!context) return null;
+  if (!context) {
+    return null;
+  }
 
   const { controls, functions, videoSrc } = context;
 
   const formatFileSize = (bytes: number) => {
-    if (!bytes) return 'Unknown';
+    if (!bytes) {
+      return 'Unknown';
+    }
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+    return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + ' ' + sizes[i];
   };
 
   const getVideoInfo = () => {
-    if (!videoSrc) return null;
+    if (!videoSrc) {
+      return null;
+    }
 
     // This would normally come from the video element or file metadata
     return {
@@ -62,38 +68,44 @@ export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
     return (
       <div
         className={cn(
-          "absolute top-0 right-0 h-full w-80 bg-black/80 backdrop-blur-2xl z-20 transition-all duration-500 ease-out",
-          "border-l border-white/20 shadow-2xl",
-          "bg-gradient-to-b from-black/90 via-black/70 to-black/90",
-          isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
+          'absolute right-0 top-0 z-20 h-full w-80 bg-black/80 backdrop-blur-2xl transition-all duration-500 ease-out',
+          'border-l border-white/20 shadow-2xl',
+          'bg-gradient-to-b from-black/90 via-black/70 to-black/90',
+          isOpen
+            ? 'translate-x-0 opacity-100'
+            : 'pointer-events-none translate-x-full opacity-0'
         )}
       >
-        <div className="p-6 h-full flex flex-col">
-          <div className="flex items-center justify-between mb-6">
+        <div className="flex h-full flex-col p-6">
+          <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <Info className="w-8 h-8 text-cosmic-green" />
-                <div className="absolute inset-0 w-8 h-8 bg-cosmic-green/20 rounded-full blur-md animate-pulse-glow" />
+                <Info className="h-8 w-8 text-cosmic-green" />
+                <div className="absolute inset-0 h-8 w-8 animate-pulse-glow rounded-full bg-cosmic-green/20 blur-md" />
               </div>
               <div>
-                <h3 className="text-xl font-headline font-bold text-gradient">Media Info</h3>
+                <h3 className="text-gradient font-headline text-xl font-bold">
+                  Media Info
+                </h3>
                 <p className="text-xs text-white/60">No media loaded</p>
               </div>
             </div>
             <Button
               variant="ghost"
               size="icon"
-              className="w-8 h-8 text-white/70 hover:text-white hover:bg-white/10 bouncy-click"
+              className="bouncy-click h-8 w-8 text-white/70 hover:bg-white/10 hover:text-white"
               onClick={onClose}
             >
-              <X className="w-4 h-4" />
+              <X className="h-4 w-4" />
             </Button>
           </div>
 
-          <div className="flex-grow flex items-center justify-center">
+          <div className="flex flex-grow items-center justify-center">
             <div className="text-center">
-              <FileVideo className="w-16 h-16 text-white/20 mx-auto mb-4" />
-              <p className="text-white/60">Load a video to see media information</p>
+              <FileVideo className="mx-auto mb-4 h-16 w-16 text-white/20" />
+              <p className="text-white/60">
+                Load a video to see media information
+              </p>
             </div>
           </div>
         </div>
@@ -104,23 +116,30 @@ export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
   return (
     <div
       className={cn(
-        "absolute top-0 right-0 h-full w-80 bg-black/80 backdrop-blur-2xl z-20 transition-all duration-500 ease-out",
-        "border-l border-white/20 shadow-2xl",
-        "bg-gradient-to-b from-black/90 via-black/70 to-black/90",
-        isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
+        'absolute right-0 top-0 z-20 h-full w-80 bg-black/80 backdrop-blur-2xl transition-all duration-500 ease-out',
+        'border-l border-white/20 shadow-2xl',
+        'bg-gradient-to-b from-black/90 via-black/70 to-black/90',
+        isOpen
+          ? 'translate-x-0 opacity-100'
+          : 'pointer-events-none translate-x-full opacity-0'
       )}
     >
-      <div className="p-6 h-full flex flex-col">
+      <div className="flex h-full flex-col p-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Info className="w-8 h-8 text-cosmic-green" />
-              <div className="absolute inset-0 w-8 h-8 bg-cosmic-green/20 rounded-full blur-md animate-pulse-glow" />
+              <Info className="h-8 w-8 text-cosmic-green" />
+              <div className="absolute inset-0 h-8 w-8 animate-pulse-glow rounded-full bg-cosmic-green/20 blur-md" />
             </div>
             <div>
-              <h3 className="text-xl font-headline font-bold text-gradient">Media Info</h3>
-              <p className="text-xs text-white/60 truncate" title={videoInfo.name}>
+              <h3 className="text-gradient font-headline text-xl font-bold">
+                Media Info
+              </h3>
+              <p
+                className="truncate text-xs text-white/60"
+                title={videoInfo.name}
+              >
                 {videoInfo.name}
               </p>
             </div>
@@ -128,10 +147,10 @@ export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="w-8 h-8 text-white/70 hover:text-white hover:bg-white/10 bouncy-click"
+            className="bouncy-click h-8 w-8 text-white/70 hover:bg-white/10 hover:text-white"
             onClick={onClose}
           >
-            <X className="w-4 h-4" />
+            <X className="h-4 w-4" />
           </Button>
         </div>
 
@@ -142,32 +161,42 @@ export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="w-10 h-10 text-white/70 hover:text-cosmic-cyan hover:bg-cosmic-cyan/20 bouncy-click"
-            onClick={() => functions.seekTo(Math.max(0, controls.progress - 10))}
+            className="bouncy-click h-10 w-10 text-white/70 hover:bg-cosmic-cyan/20 hover:text-cosmic-cyan"
+            onClick={() =>
+              functions.seekTo(Math.max(0, controls.progress - 10))
+            }
           >
-            <SkipBack className="w-5 h-5" />
+            <SkipBack className="h-5 w-5" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="w-12 h-12 text-white hover:text-cosmic-purple hover:bg-cosmic-purple/20 bouncy-click"
+            className="bouncy-click h-12 w-12 text-white hover:bg-cosmic-purple/20 hover:text-cosmic-purple"
             onClick={functions.togglePlay}
           >
-            {controls.isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+            {controls.isPlaying ? (
+              <Pause className="h-6 w-6" />
+            ) : (
+              <Play className="h-6 w-6" />
+            )}
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="w-10 h-10 text-white/70 hover:text-cosmic-cyan hover:bg-cosmic-cyan/20 bouncy-click"
-            onClick={() => functions.seekTo(Math.min(controls.duration, controls.progress + 10))}
+            className="bouncy-click h-10 w-10 text-white/70 hover:bg-cosmic-cyan/20 hover:text-cosmic-cyan"
+            onClick={() =>
+              functions.seekTo(
+                Math.min(controls.duration, controls.progress + 10)
+              )
+            }
           >
-            <SkipForward className="w-5 h-5" />
+            <SkipForward className="h-5 w-5" />
           </Button>
         </div>
 
         {/* Progress */}
         <div className="mb-6">
-          <div className="flex items-center justify-between text-sm text-white/80 mb-2">
+          <div className="mb-2 flex items-center justify-between text-sm text-white/80">
             <span>{formatTime(controls.progress)}</span>
             <span>{formatTime(controls.duration)}</span>
           </div>
@@ -180,34 +209,41 @@ export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
         {/* Media Details */}
         <div className="flex-grow space-y-4">
           <div className="space-y-3">
-            <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-              <FileVideo className="w-5 h-5 text-cosmic-blue flex-shrink-0" />
+            <div className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
+              <FileVideo className="h-5 w-5 flex-shrink-0 text-cosmic-blue" />
               <div className="min-w-0">
                 <p className="text-xs text-white/60">Filename</p>
-                <p className="text-sm text-white truncate" title={videoInfo.name}>
+                <p
+                  className="truncate text-sm text-white"
+                  title={videoInfo.name}
+                >
                   {videoInfo.name}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-              <Clock className="w-5 h-5 text-cosmic-green flex-shrink-0" />
+            <div className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
+              <Clock className="h-5 w-5 flex-shrink-0 text-cosmic-green" />
               <div>
                 <p className="text-xs text-white/60">Duration</p>
-                <p className="text-sm text-white">{formatTime(videoInfo.duration)}</p>
+                <p className="text-sm text-white">
+                  {formatTime(videoInfo.duration)}
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-              <HardDrive className="w-5 h-5 text-cosmic-orange flex-shrink-0" />
+            <div className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
+              <HardDrive className="h-5 w-5 flex-shrink-0 text-cosmic-orange" />
               <div>
                 <p className="text-xs text-white/60">File Size</p>
-                <p className="text-sm text-white">{formatFileSize(videoInfo.size)}</p>
+                <p className="text-sm text-white">
+                  {formatFileSize(videoInfo.size)}
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-              <Monitor className="w-5 h-5 text-cosmic-purple flex-shrink-0" />
+            <div className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
+              <Monitor className="h-5 w-5 flex-shrink-0 text-cosmic-purple" />
               <div>
                 <p className="text-xs text-white/60">Resolution</p>
                 <p className="text-sm text-white">{videoInfo.resolution}</p>
@@ -217,18 +253,32 @@ export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
 
           {/* Technical Details */}
           <div className="space-y-2">
-            <h4 className="text-sm font-medium text-white/80">Technical Details</h4>
+            <h4 className="text-sm font-medium text-white/80">
+              Technical Details
+            </h4>
             <div className="grid grid-cols-2 gap-2">
-              <Badge variant="secondary" className="bg-cosmic-cyan/20 text-cosmic-cyan border-cosmic-cyan/30">
+              <Badge
+                variant="secondary"
+                className="border-cosmic-cyan/30 bg-cosmic-cyan/20 text-cosmic-cyan"
+              >
                 {videoInfo.codec}
               </Badge>
-              <Badge variant="secondary" className="bg-cosmic-pink/20 text-cosmic-pink border-cosmic-pink/30">
+              <Badge
+                variant="secondary"
+                className="border-cosmic-pink/30 bg-cosmic-pink/20 text-cosmic-pink"
+              >
                 {videoInfo.frameRate}
               </Badge>
-              <Badge variant="secondary" className="bg-cosmic-yellow/20 text-cosmic-yellow border-cosmic-yellow/30">
+              <Badge
+                variant="secondary"
+                className="border-cosmic-yellow/30 bg-cosmic-yellow/20 text-cosmic-yellow"
+              >
                 {videoInfo.bitrate}
               </Badge>
-              <Badge variant="secondary" className="bg-cosmic-green/20 text-cosmic-green border-cosmic-green/30">
+              <Badge
+                variant="secondary"
+                className="border-cosmic-green/30 bg-cosmic-green/20 text-cosmic-green"
+              >
                 {controls.aspectRatio}
               </Badge>
             </div>
@@ -236,33 +286,46 @@ export function MediaInfo({ isOpen, onClose }: MediaInfoProps) {
 
           {/* Playback Stats */}
           <div className="space-y-2">
-            <h4 className="text-sm font-medium text-white/80">Playback Stats</h4>
+            <h4 className="text-sm font-medium text-white/80">
+              Playback Stats
+            </h4>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-white/5 p-2 rounded">
+              <div className="rounded bg-white/5 p-2">
                 <p className="text-white/60">Playback Rate</p>
-                <p className="text-white font-medium">{controls.playbackRate.toFixed(2)}x</p>
+                <p className="font-medium text-white">
+                  {controls.playbackRate.toFixed(2)}x
+                </p>
               </div>
-              <div className="bg-white/5 p-2 rounded">
+              <div className="rounded bg-white/5 p-2">
                 <p className="text-white/60">Volume</p>
-                <p className="text-white font-medium">{Math.round((controls.isMuted ? 0 : controls.volume) * 100)}%</p>
+                <p className="font-medium text-white">
+                  {Math.round((controls.isMuted ? 0 : controls.volume) * 100)}%
+                </p>
               </div>
-              <div className="bg-white/5 p-2 rounded">
+              <div className="rounded bg-white/5 p-2">
                 <p className="text-white/60">Zoom</p>
-                <p className="text-white font-medium">{controls.zoom.toFixed(1)}x</p>
+                <p className="font-medium text-white">
+                  {controls.zoom.toFixed(1)}x
+                </p>
               </div>
-              <div className="bg-white/5 p-2 rounded">
+              <div className="rounded bg-white/5 p-2">
                 <p className="text-white/60">Status</p>
-                <p className="text-white font-medium">{controls.isPlaying ? 'Playing' : 'Paused'}</p>
+                <p className="font-medium text-white">
+                  {controls.isPlaying ? 'Playing' : 'Paused'}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-4 pt-4 border-t border-white/10">
+        <div className="mt-4 border-t border-white/10 pt-4">
           <div className="flex items-center justify-between text-xs text-white/60">
             <span>Aspect Ratio: {controls.aspectRatio}</span>
-            <Badge variant="outline" className="border-cosmic-green/30 text-cosmic-green">
+            <Badge
+              variant="outline"
+              className="border-cosmic-green/30 text-cosmic-green"
+            >
               Active
             </Badge>
           </div>

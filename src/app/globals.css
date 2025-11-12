@@ -100,34 +100,44 @@
     transform: scale(0.95);
   }
   @keyframes bounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   /* Futuristic Glow Effects */
   .glow-primary {
-    box-shadow: 0 0 20px hsl(var(--cosmic-purple) / 0.5),
-                0 0 40px hsl(var(--cosmic-purple) / 0.3),
-                0 0 60px hsl(var(--cosmic-purple) / 0.1);
+    box-shadow:
+      0 0 20px hsl(var(--cosmic-purple) / 0.5),
+      0 0 40px hsl(var(--cosmic-purple) / 0.3),
+      0 0 60px hsl(var(--cosmic-purple) / 0.1);
   }
 
   .glow-pink {
-    box-shadow: 0 0 20px hsl(var(--cosmic-pink) / 0.5),
-                0 0 40px hsl(var(--cosmic-pink) / 0.3),
-                0 0 60px hsl(var(--cosmic-pink) / 0.1);
+    box-shadow:
+      0 0 20px hsl(var(--cosmic-pink) / 0.5),
+      0 0 40px hsl(var(--cosmic-pink) / 0.3),
+      0 0 60px hsl(var(--cosmic-pink) / 0.1);
   }
 
   .glow-blue {
-    box-shadow: 0 0 20px hsl(var(--cosmic-blue) / 0.5),
-                0 0 40px hsl(var(--cosmic-blue) / 0.3),
-                0 0 60px hsl(var(--cosmic-blue) / 0.1);
+    box-shadow:
+      0 0 20px hsl(var(--cosmic-blue) / 0.5),
+      0 0 40px hsl(var(--cosmic-blue) / 0.3),
+      0 0 60px hsl(var(--cosmic-blue) / 0.1);
   }
 
   .glow-cyan {
-    box-shadow: 0 0 20px hsl(var(--cosmic-cyan) / 0.5),
-                0 0 40px hsl(var(--cosmic-cyan) / 0.3),
-                0 0 60px hsl(var(--cosmic-cyan) / 0.1);
+    box-shadow:
+      0 0 20px hsl(var(--cosmic-cyan) / 0.5),
+      0 0 40px hsl(var(--cosmic-cyan) / 0.3),
+      0 0 60px hsl(var(--cosmic-cyan) / 0.1);
   }
 
   /* Ambient Light Effects */
@@ -141,7 +151,8 @@
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: linear-gradient(45deg,
+    background: linear-gradient(
+      45deg,
       hsl(var(--cosmic-purple) / 0.3),
       hsl(var(--cosmic-pink) / 0.3),
       hsl(var(--cosmic-blue) / 0.3),
@@ -201,20 +212,23 @@
   }
 
   .hover-glow:hover {
-    box-shadow: 0 0 30px hsl(var(--cosmic-purple) / 0.6),
-                0 0 60px hsl(var(--cosmic-purple) / 0.4),
-                0 0 90px hsl(var(--cosmic-purple) / 0.2);
+    box-shadow:
+      0 0 30px hsl(var(--cosmic-purple) / 0.6),
+      0 0 60px hsl(var(--cosmic-purple) / 0.4),
+      0 0 90px hsl(var(--cosmic-purple) / 0.2);
   }
 
   /* Text Effects */
   .text-glow {
-    text-shadow: 0 0 10px hsl(var(--cosmic-purple) / 0.8),
-                 0 0 20px hsl(var(--cosmic-purple) / 0.6),
-                 0 0 30px hsl(var(--cosmic-purple) / 0.4);
+    text-shadow:
+      0 0 10px hsl(var(--cosmic-purple) / 0.8),
+      0 0 20px hsl(var(--cosmic-purple) / 0.6),
+      0 0 30px hsl(var(--cosmic-purple) / 0.4);
   }
 
   .text-gradient {
-    background: linear-gradient(45deg,
+    background: linear-gradient(
+      45deg,
       hsl(var(--cosmic-purple)),
       hsl(var(--cosmic-pink)),
       hsl(var(--cosmic-blue)),
@@ -229,49 +243,85 @@
 
   /* Keyframe Animations */
   @keyframes ambient-rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
 
   @keyframes pulse-glow {
     0% {
-      box-shadow: 0 0 20px hsl(var(--cosmic-purple) / 0.3),
-                  0 0 40px hsl(var(--cosmic-purple) / 0.2);
+      box-shadow:
+        0 0 20px hsl(var(--cosmic-purple) / 0.3),
+        0 0 40px hsl(var(--cosmic-purple) / 0.2);
     }
     100% {
-      box-shadow: 0 0 30px hsl(var(--cosmic-purple) / 0.6),
-                  0 0 60px hsl(var(--cosmic-purple) / 0.4),
-                  0 0 90px hsl(var(--cosmic-purple) / 0.2);
+      box-shadow:
+        0 0 30px hsl(var(--cosmic-purple) / 0.6),
+        0 0 60px hsl(var(--cosmic-purple) / 0.4),
+        0 0 90px hsl(var(--cosmic-purple) / 0.2);
     }
   }
 
   @keyframes rotate-slow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes scale-in {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 
   @keyframes slide-up {
-    0% { transform: translateY(20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   @keyframes fade-in {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
   }
 }
