@@ -87,6 +87,26 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow: hidden; /* Prevent body scrolling */
+    position: fixed; /* Fix body position */
+    width: 100%;
+    height: 100vh;
+  }
+
+  /* Hide scrollbars globally but keep functionality */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* Ensure main containers don't overflow */
+  html {
+    overflow: hidden;
+    height: 100vh;
   }
 }
 
