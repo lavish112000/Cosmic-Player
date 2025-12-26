@@ -7,7 +7,7 @@ A high-performance 4K video player built with Next.js 15, React 18, and TypeScri
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.3-black.svg)](https://nextjs.org/)
 
-## ✨ Features
+## ✨ Features 
 
 - 🎬 4K video playback support
 - 🎨 Modern, responsive UI built with Tailwind CSS
