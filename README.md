@@ -1,7 +1,7 @@
 # Cosmic Player 🚀
 
 A high-performance 4K video player built with Next.js 15, React 18, and TypeScript.
-
+ 
 [![CI Status](https://github.com/lavish112000/Cosmic-Player/workflows/Code%20Quality%20CI/badge.svg)](https://github.com/lavish112000/Cosmic-Player/actions)
 [![Code Review](https://github.com/lavish112000/Cosmic-Player/workflows/Code%20Review%20Automation/badge.svg)](https://github.com/lavish112000/Cosmic-Player/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
